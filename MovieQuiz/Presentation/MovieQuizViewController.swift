@@ -24,18 +24,12 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - IBActions
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
         let currentQuestion = questions[currentQuestionIndex]
-        let givenAnswer = true
-        let isCorrect = givenAnswer == currentQuestion.correctAnswer
-
-        showAnswerResult(isCorrect: isCorrect)
+        showAnswerResult(isCorrect: currentQuestion.correctAnswer)
     }
 
     @IBAction private func noButtonClicked(_ sender: UIButton) {
         let currentQuestion = questions[currentQuestionIndex]
-        let givenAnswer = false
-        let isCorrect = givenAnswer == currentQuestion.correctAnswer
-
-        showAnswerResult(isCorrect: isCorrect)
+        showAnswerResult(isCorrect: !currentQuestion.correctAnswer)
     }
 
     // MARK: - Quiz Logic
@@ -79,18 +73,16 @@ final class MovieQuizViewController: UIViewController {
 
     // MARK: - View Model Conversion
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
-        let questionStep = QuizStepViewModel(
-            image: UIImage(named: model.image) ?? UIImage(),
+        QuizStepViewModel(
+            imageName: UIImage(named: model.imageName) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questions.count)"
         )
-
-        return questionStep
     }
 
     // MARK: - UI Updates
     private func show(quiz step: QuizStepViewModel) {
-        imageView.image = step.image
+        imageView.image = step.imageName
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
 
@@ -123,19 +115,19 @@ final class MovieQuizViewController: UIViewController {
     }
 
     // MARK: - Models
-    struct QuizQuestion {
-        let image: String
+    private struct QuizQuestion {
+        let imageName: String
         let text: String
         let correctAnswer: Bool
     }
 
-    struct QuizStepViewModel {
-        let image: UIImage
+    private struct QuizStepViewModel {
+        let imageName: UIImage
         let question: String
         let questionNumber: String
     }
 
-    struct QuizResultsViewModel {
+    private struct QuizResultsViewModel {
         let title: String
         let text: String
         let buttonText: String
@@ -144,52 +136,52 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - Mock Data
     private let questions: [QuizQuestion] = [
         QuizQuestion(
-            image: "The Godfather",
+            imageName: "The Godfather",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true
         ),
         QuizQuestion(
-            image: "The Dark Knight",
+            imageName: "The Dark Knight",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true
         ),
         QuizQuestion(
-            image: "Kill Bill",
+            imageName: "Kill Bill",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true
         ),
         QuizQuestion(
-            image: "The Avengers",
+            imageName: "The Avengers",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true
         ),
         QuizQuestion(
-            image: "Deadpool",
+            imageName: "Deadpool",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true
         ),
         QuizQuestion(
-            image: "The Green Knight",
+            imageName: "The Green Knight",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: true
         ),
         QuizQuestion(
-            image: "Old",
+            imageName: "Old",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false
         ),
         QuizQuestion(
-            image: "The Ice Age Adventures of Buck Wild",
+            imageName: "The Ice Age Adventures of Buck Wild",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false
         ),
         QuizQuestion(
-            image: "Tesla",
+            imageName: "Tesla",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false
         ),
         QuizQuestion(
-            image: "Vivarium",
+            imageName: "Vivarium",
             text: "Рейтинг этого фильма больше чем 6?",
             correctAnswer: false
         )
