@@ -1,7 +1,11 @@
 import Foundation
 
 extension Array {
-    subscript(safe index: Index) -> Element? {
-        indices ~= index ? self[index] : nil
+    subscript(safe index: Int) -> Element? {
+        guard indices.contains(index) else {
+            return nil
+        }
+
+        return self[index]
     }
 }
